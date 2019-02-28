@@ -1,9 +1,8 @@
 {
-	"authors": [
-		"Hiroki Noda"
-	],
+	"name": "grd",
+	"authors": ["Hiroki Noda"],
 	"copyright": "Copyright © 2019, Hiroki Noda",
-	"description": "Command line apps in D",
+	"description": "Small grep clone, port of `Learning Rust by Writing A Command Line App`",
 	"license": "BSL-1.0",
-	"name": "grd"
+	"homepage": "https://github.com/kubo39/grd"
 }
