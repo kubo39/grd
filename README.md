@@ -30,3 +30,9 @@ $ dub test
 ```console
 $ dub test --main-file tests/cli.d
 ```
+
+### Run all tests
+
+```console
+$ make test
+```

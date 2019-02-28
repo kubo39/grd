@@ -3,9 +3,13 @@ language: d
 d:
   - dmd
 
+addons:
+  apt:
+    packages:
+      - make
+
 script:
-  - dub test # unit tests
-  - dub test --main-file tests/cli.d # integration tests
+  - make test
 
 branches:
   only:
