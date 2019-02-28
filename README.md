@@ -11,7 +11,7 @@ $ dub run -- <pattern> <path>
 For example,
 
 ```console
-$ dub run -- main src/app.d
+$ dub run -- main source/app.d
 (...)
     void main() {}
 int main(string[] args)
