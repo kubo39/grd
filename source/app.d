@@ -1,5 +1,8 @@
+import std.algorithm;
+import std.file;
 import std.getopt;
 import std.stdio;
+import std.string;
 
 void usage()
 {
@@ -26,6 +29,11 @@ int main(string[] args)
     string pattern = args[1];
     string path = args[2];
 
-    writeln(args[1 .. 3]);
+    auto content = path.readText();
+    foreach (line; lineSplitter(content))
+    {
+        if (line.canFind(pattern))
+            writeln(line);
+    }
     return 0;
 }
