@@ -1,8 +1,8 @@
-import std.algorithm;
 import std.file;
 import std.getopt;
 import std.stdio;
-import std.string;
+
+import grd;
 
 class CustomError : Exception
 {
@@ -20,6 +20,11 @@ USAGE:
 `);
 }
 
+version (unittest)
+{
+    void main() {}
+}
+else
 int main(string[] args)
 {
     string output = void;
@@ -47,10 +52,6 @@ int main(string[] args)
         throw new CustomError("Error reading " ~ path ~ ": " ~ e.msg);
     }
 
-    foreach (line; lineSplitter(content))
-    {
-        if (line.canFind(pattern))
-            writeln(line);
-    }
+    findMatches(content, pattern, stdout.lockingTextWriter());
     return 0;
 }
