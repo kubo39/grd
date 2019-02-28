@@ -1,4 +1,4 @@
-# grd -- Learning D by Writing A Command Line App.
+# grd -- Learning D by Writing A Command Line App [![Build Status](https://secure.travis-ci.org/kubo39/grd.svg?branch=master)](http://travis-ci.org/kubo39/grd)
 
 Small grep clone, ported from `Learning Rust by Writing A command Line App`.
 
