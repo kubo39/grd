@@ -4,6 +4,14 @@ import std.getopt;
 import std.stdio;
 import std.string;
 
+class CustomError : Exception
+{
+    this(string msg, string file = __FILE__, size_t line = __LINE__)
+    {
+        super(msg, file, line);
+    }
+}
+
 void usage()
 {
     stderr.writeln(`
@@ -29,7 +37,16 @@ int main(string[] args)
     string pattern = args[1];
     string path = args[2];
 
-    auto content = path.readText();
+    string content;
+    try
+    {
+        content = path.readText();
+    }
+    catch (FileException e)
+    {
+        throw new CustomError("Error reading " ~ path ~ ": " ~ e.msg);
+    }
+
     foreach (line; lineSplitter(content))
     {
         if (line.canFind(pattern))
