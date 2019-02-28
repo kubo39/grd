@@ -1,0 +1,15 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/grd
+grd.so
+grd.dylib
+grd.dll
+grd.a
+grd.lib
+grd-test-*
+*.exe
+*.o
+*.obj
+*.lst

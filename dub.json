@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"Hiroki Noda"
+	],
+	"copyright": "Copyright © 2019, Hiroki Noda",
+	"description": "Command line apps in D",
+	"license": "BSL-1.0",
+	"name": "grd"
+}
