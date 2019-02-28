@@ -27,8 +27,8 @@ version (unittest)
 else
 int main(string[] args)
 {
-    string output = void;
-    auto helpInformation = args.getopt("o|output", &output);
+    string outputFile;
+    auto helpInformation = args.getopt("o|output", &outputFile);
     if (helpInformation.helpWanted)
     {
         usage();
@@ -52,6 +52,7 @@ int main(string[] args)
         throw new CustomError("Error reading " ~ path ~ ": " ~ e.msg);
     }
 
-    findMatches(content, pattern, stdout.lockingTextWriter());
+    auto output = (outputFile !is null) ? File(outputFile, "w") : stdout;
+    findMatches(content, pattern, output.lockingTextWriter());
     return 0;
 }
