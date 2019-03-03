@@ -20,6 +20,23 @@ USAGE:
 `);
 }
 
+struct Cli
+{
+    string pattern;
+    string path;
+
+    this(string pattern, string path)
+    {
+        this.pattern = pattern;
+        this.path = path;
+    }
+}
+
+Cli parseArgs(string[] args)
+{
+    return Cli(args[1], args[2]);
+}
+
 version (unittest)
 {
     void main() {}
@@ -39,20 +56,20 @@ int main(string[] args)
         usage();
         return 1;
     }
-    string pattern = args[1];
-    string path = args[2];
+
+    auto cli = parseArgs(args);
 
     string content;
     try
     {
-        content = path.readText();
+        content = cli.path.readText();
     }
     catch (FileException e)
     {
-        throw new CustomError("Error reading " ~ path ~ ": " ~ e.msg);
+        throw new CustomError("Error reading " ~ cli.path ~ ": " ~ e.msg);
     }
 
     auto output = (outputFile !is null) ? File(outputFile, "w") : stdout;
-    findMatches(content, pattern, output.lockingTextWriter());
+    findMatches(content, cli.pattern, output.lockingTextWriter());
     return 0;
 }
