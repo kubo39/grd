@@ -1,3 +1,4 @@
+import core.stdc.stdlib;
 import std.file;
 import std.getopt;
 import std.stdio;
@@ -50,12 +51,12 @@ int main(string[] args)
     if (helpInformation.helpWanted)
     {
         usage();
-        return 0;
+        return EXIT_SUCCESS;
     }
     if (args.length < 2)
     {
         usage();
-        return 1;
+        return EXIT_FAILURE;
     }
 
     auto cli = parseArgs(args);
@@ -72,5 +73,5 @@ int main(string[] args)
 
     auto output = (outputFile !is null) ? File(outputFile, "w") : stdout;
     findMatches(content, cli.pattern, output.lockingTextWriter());
-    return 0;
+    return EXIT_SUCCESS;
 }
