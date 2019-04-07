@@ -14,14 +14,6 @@ class CustomError : Exception
     }
 }
 
-void usage()
-{
-    stderr.writeln(`
-USAGE:
-    grd <pattern> <path>
-`);
-}
-
 struct Cli
 {
     string pattern;
@@ -52,12 +44,12 @@ int main(string[] args)
     auto helpInformation = args.getopt("o|output", &outputFiles);
     if (helpInformation.helpWanted)
     {
-        usage();
+        defaultGetoptPrinter("grd <pattern> <path>", helpInformation.options);
         return EXIT_SUCCESS;
     }
     if (args.length < 2)
     {
-        usage();
+        defaultGetoptPrinter("grd <pattern> <path>", helpInformation.options);
         return EXIT_FAILURE;
     }
 
