@@ -55,27 +55,24 @@ int main(string[] args)
 
     auto cli = parseArgs(args);
 
-    string content;
     try
     {
-        content = cli.path.readText();
+        if (!outputFiles.length)
+        {
+            findMatches(File(cli.path, "r"), cli.pattern, stdout.lockingTextWriter());
+        }
+        else
+        {
+            foreach (outputFile; outputFiles)
+            {
+                auto output = File(outputFile, "w");
+                findMatches(File(cli.path, "r"), cli.pattern, output.lockingTextWriter());
+            }
+        }
     }
     catch (FileException e)
     {
         throw new CustomError("Error reading " ~ cli.path ~ ": " ~ e.msg);
-    }
-
-    if (!outputFiles.length)
-    {
-        findMatches(content, cli.pattern, stdout.lockingTextWriter());
-    }
-    else
-    {
-        foreach (outputFile; outputFiles)
-        {
-            auto output = File(outputFile, "w");
-            findMatches(content, cli.pattern, output.lockingTextWriter());
-        }
     }
     return EXIT_SUCCESS;
 }

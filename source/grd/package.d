@@ -2,12 +2,13 @@ module grd;
 
 import std.algorithm;
 import std.range;
+import std.stdio;
 import std.string;
 
-void findMatches(T)(string content, string pattern, T writer)
+void findMatches(T)(File input, string pattern, T writer)
     if (isOutputRange!(T, char))
 {
-    foreach (line; lineSplitter(content))
+    foreach (line; input.byLine)
     {
         if (line.canFind(pattern))
         {
@@ -21,8 +22,13 @@ unittest
 {
     void findOneMatch()
     {
-        char[] results;
-        findMatches("lorem ipsum\ndolor sit amet", "lorem", results);
-        assert(results == "lorem ipsum\n");
+        import std.array;
+        auto tmp = File.tmpfile();
+        scope (exit) tmp.close();
+        tmp.write("lorem ipsum\ndolor sit amet");
+        tmp.flush();
+        auto results = appender!(char[]);
+        findMatches(tmp, "lorem", results);
+        assert(results.data == "lorem ipsum\n");
     }
 }
