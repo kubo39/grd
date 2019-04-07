@@ -3,7 +3,6 @@ module grd;
 import std.algorithm;
 import std.range;
 import std.stdio;
-import std.string;
 
 void findMatches(T)(File input, string pattern, T writer)
     if (isOutputRange!(T, char))

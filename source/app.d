@@ -1,5 +1,5 @@
 import core.stdc.stdlib;
-import std.file;
+import std.exception;
 import std.getopt;
 import std.stdio;
 
@@ -70,7 +70,7 @@ int main(string[] args)
             }
         }
     }
-    catch (FileException e)
+    catch (ErrnoException e)
     {
         throw new CustomError("Error reading " ~ cli.path ~ ": " ~ e.msg);
     }
