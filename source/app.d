@@ -46,8 +46,10 @@ version (unittest)
 else
 int main(string[] args)
 {
-    string outputFile;
-    auto helpInformation = args.getopt("o|output", &outputFile);
+    string[] outputFiles;
+    arraySep = ",";
+    scope (exit) arraySep = "";
+    auto helpInformation = args.getopt("o|output", &outputFiles);
     if (helpInformation.helpWanted)
     {
         usage();
@@ -71,7 +73,17 @@ int main(string[] args)
         throw new CustomError("Error reading " ~ cli.path ~ ": " ~ e.msg);
     }
 
-    auto output = (outputFile !is null) ? File(outputFile, "w") : stdout;
-    findMatches(content, cli.pattern, output.lockingTextWriter());
+    if (!outputFiles.length)
+    {
+        findMatches(content, cli.pattern, stdout.lockingTextWriter());
+    }
+    else
+    {
+        foreach (outputFile; outputFiles)
+        {
+            auto output = File(outputFile, "w");
+            findMatches(content, cli.pattern, output.lockingTextWriter());
+        }
+    }
     return EXIT_SUCCESS;
 }

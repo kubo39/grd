@@ -18,8 +18,24 @@ void specifyOutputFile()
     assert(readText(deleteme) == "A test\nAnother test\n");
 }
 
+void multipleOutputFiles()
+{
+    auto deleteme1 = "deleteme1";
+    auto deleteme2 = "deleteme2";
+    auto p = execute(["dub", "run", "-q", "--", "-o", deleteme1 ~ "," ~ deleteme2, "test", "tests/test.txt"]);
+    assert(exists(deleteme1) && exists(deleteme2));
+    scope (exit)
+    {
+        remove(deleteme1);
+        remove(deleteme2);
+    }
+    assert(readText(deleteme1) == "A test\nAnother test\n");
+    assert(readText(deleteme2) == "A test\nAnother test\n");
+}
+
 void main()
 {
     findContentInFile();
     specifyOutputFile();
+    multipleOutputFiles();
 }
