@@ -49,7 +49,9 @@ int main(string[] args)
     }
     if (args.length < 2)
     {
-        defaultGetoptPrinter("grd <pattern> <path>", helpInformation.options);
+        defaultGetoptFormatter(stderr.lockingTextWriter(),
+                               "grd <pattern> <path>",
+                               helpInformation.options);
         return EXIT_FAILURE;
     }
 
