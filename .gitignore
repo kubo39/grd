@@ -13,3 +13,4 @@ grd-test-*
 *.o
 *.obj
 *.lst
+/bin

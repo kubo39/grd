@@ -1,6 +1,8 @@
 {
 	"name": "grd",
 	"authors": ["Hiroki Noda"],
+	"targetType": "executable",
+	"targetPath": "bin",
 	"copyright": "Copyright © 2019, Hiroki Noda",
 	"description": "Small grep clone, port of `Learning Rust by Writing A Command Line App`",
 	"license": "BSL-1.0",
