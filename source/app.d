@@ -9,8 +9,7 @@ import grd;
 class CustomError : Exception
 {
     ///
-    this(string msg, string file = __FILE__, size_t line = __LINE__)
-    @safe pure nothrow
+    this(string msg, string file = __FILE__, size_t line = __LINE__) @safe pure nothrow
     {
         super(msg, file, line);
     }
@@ -40,14 +39,17 @@ Cli parseArgs(string[] args)
 
 version (unittest)
 {
-    void main() {}
+    void main()
+    {
+    }
 }
 else
-int main(string[] args)
+    int main(string[] args)
 {
     string[] outputFiles;
     arraySep = ",";
-    scope (exit) arraySep = "";
+    scope (exit)
+        arraySep = "";
     auto helpInformation = args.getopt("o|output", &outputFiles);
     if (helpInformation.helpWanted)
     {
@@ -57,8 +59,7 @@ int main(string[] args)
     if (args.length < 2)
     {
         defaultGetoptFormatter(stderr.lockingTextWriter(),
-                               "grd <pattern> <path>",
-                               helpInformation.options);
+                "grd <pattern> <path>", helpInformation.options);
         return EXIT_FAILURE;
     }
 

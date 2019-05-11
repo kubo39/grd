@@ -6,7 +6,7 @@ import std.stdio;
 
 ///
 void findMatches(T)(File input, string pattern, T writer)
-    if (isOutputRange!(T, char))
+        if (isOutputRange!(T, char))
 {
     foreach (line; input.byLine)
     {
@@ -23,8 +23,10 @@ unittest
     void findOneMatch()
     {
         import std.array : appender;
+
         auto tmp = File.tmpfile();
-        scope (exit) tmp.close();
+        scope (exit)
+            tmp.close();
         tmp.write("lorem ipsum\ndolor sit amet");
         tmp.flush();
         auto results = appender!(char[]);
