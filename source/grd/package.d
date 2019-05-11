@@ -4,6 +4,7 @@ import std.algorithm;
 import std.range;
 import std.stdio;
 
+///
 void findMatches(T)(File input, string pattern, T writer)
     if (isOutputRange!(T, char))
 {
@@ -21,7 +22,7 @@ unittest
 {
     void findOneMatch()
     {
-        import std.array;
+        import std.array : appender;
         auto tmp = File.tmpfile();
         scope (exit) tmp.close();
         tmp.write("lorem ipsum\ndolor sit amet");

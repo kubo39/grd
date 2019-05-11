@@ -5,8 +5,10 @@ import std.stdio;
 
 import grd;
 
+///
 class CustomError : Exception
 {
+    ///
     this(string msg, string file = __FILE__, size_t line = __LINE__)
     @safe pure nothrow
     {
@@ -14,11 +16,15 @@ class CustomError : Exception
     }
 }
 
+///
 struct Cli
 {
+private:
     string pattern;
     string path;
 
+public:
+    ///
     this(string pattern, string path)
     {
         this.pattern = pattern;
@@ -26,6 +32,7 @@ struct Cli
     }
 }
 
+///
 Cli parseArgs(string[] args)
 {
     return Cli(args[1], args[2]);
