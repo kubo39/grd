@@ -1,28 +1,32 @@
-version (unittest):
-
-import std.file;
+version (unittest)  : import std.file;
 import std.process;
 
 void findContentInFile()
 {
-    auto p = execute(["dub", "run", "-q", "--", "test", "tests/test.txt"]);
+    const p = execute(["dub", "run", "-q", "--", "test", "tests/test.txt"]);
     assert(p.output == "A test\nAnother test\n");
 }
 
 void specifyOutputFile()
 {
-    auto deleteme = "deleteme";
-    auto p = execute(["dub", "run", "-q", "--", "-o", deleteme, "test", "tests/test.txt"]);
+    const deleteme = "deleteme";
+    cast(void) execute([
+            "dub", "run", "-q", "--", "-o", deleteme, "test", "tests/test.txt"
+            ]);
     assert(exists(deleteme));
-    scope (exit) remove(deleteme);
+    scope (exit)
+        remove(deleteme);
     assert(readText(deleteme) == "A test\nAnother test\n");
 }
 
 void multipleOutputFiles()
 {
-    auto deleteme1 = "deleteme1";
-    auto deleteme2 = "deleteme2";
-    auto p = execute(["dub", "run", "-q", "--", "-o", deleteme1 ~ "," ~ deleteme2, "test", "tests/test.txt"]);
+    const deleteme1 = "deleteme1";
+    const deleteme2 = "deleteme2";
+    cast(void) execute([
+            "dub", "run", "-q", "--", "-o", deleteme1 ~ "," ~ deleteme2, "test",
+            "tests/test.txt"
+            ]);
     assert(exists(deleteme1) && exists(deleteme2));
     scope (exit)
     {
