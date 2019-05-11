@@ -36,3 +36,11 @@ $ dub test --main-file tests/cli.d
 ```console
 $ make test
 ```
+
+## Lint
+
+Use `dscanner`.
+
+```console
+$ dscanner -S
+```
