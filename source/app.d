@@ -50,7 +50,14 @@ else
     arraySep = ",";
     scope (exit)
         arraySep = "";
-    auto helpInformation = args.getopt("o|output", &outputFiles);
+
+    // dfmt off
+    auto helpInformation = args.getopt(
+        std.getopt.config.caseSensitive,
+        "o|output", &outputFiles
+        );
+    // dfmt on
+
     if (helpInformation.helpWanted)
     {
         defaultGetoptPrinter("grd <pattern> <path>", helpInformation.options);
