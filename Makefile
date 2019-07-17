@@ -23,7 +23,7 @@ endif
 all: build
 
 build:
-	$(DUB) build --build=$(BUILD)
+	$(DUB) build -b $(BUILD)
 
 test: unittest integration_test
 
