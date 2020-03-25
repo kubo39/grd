@@ -19,12 +19,12 @@ class CustomError : Exception
 
 version (unittest)
 {
-    void main()
+    void main() @system
     {
     }
 }
 else
-    int main(string[] args)
+    int main(string[] args) @system
 {
     auto a = new Program("grd", "1.0")
         .author("Hiroki Noda <kubo39@gmail.com>")
