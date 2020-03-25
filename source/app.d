@@ -1,5 +1,6 @@
 import core.stdc.stdlib;
 import std.exception;
+import std.file;
 import std.stdio;
 
 import commandr;
@@ -37,16 +38,17 @@ else
 
     try
     {
+        auto content = a.arg("path").readText;
         if (!a.optionAll("output").length)
         {
-            findMatches(File(a.arg("path"), "r"), a.arg("pattern"), stdout.lockingTextWriter());
+            findMatches(content, a.arg("pattern"), stdout.lockingTextWriter());
         }
         else
         {
             foreach (outputFile; a.optionAll("output"))
             {
                 auto output = File(outputFile, "w");
-                findMatches(File(a.arg("path"), "r"), a.arg("pattern"), output.lockingTextWriter());
+                findMatches(content, a.arg("pattern"), output.lockingTextWriter());
             }
         }
     }
