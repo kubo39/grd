@@ -1,7 +1,8 @@
 import core.stdc.stdlib;
 import std.exception;
-import std.getopt;
 import std.stdio;
+
+import commandr;
 
 import grd;
 
@@ -15,28 +16,6 @@ class CustomError : Exception
     }
 }
 
-///
-struct Cli
-{
-private:
-    string pattern;
-    string path;
-
-public:
-    ///
-    this(string pattern, string path)
-    {
-        this.pattern = pattern;
-        this.path = path;
-    }
-}
-
-///
-Cli parseArgs(string[] args)
-{
-    return Cli(args[1], args[2]);
-}
-
 version (unittest)
 {
     void main()
@@ -46,50 +25,34 @@ version (unittest)
 else
     int main(string[] args)
 {
-    string[] outputFiles;
-    arraySep = ",";
-    scope (exit)
-        arraySep = "";
-
-    // dfmt off
-    auto helpInformation = args.getopt(
-        std.getopt.config.caseSensitive,
-        "o|output", &outputFiles
-        );
-    // dfmt on
-
-    if (helpInformation.helpWanted)
-    {
-        defaultGetoptPrinter("grd <pattern> <path>", helpInformation.options);
-        return EXIT_SUCCESS;
-    }
-    if (args.length < 2)
-    {
-        defaultGetoptFormatter(stderr.lockingTextWriter(),
-                "grd <pattern> <path>", helpInformation.options);
-        return EXIT_FAILURE;
-    }
-
-    auto cli = parseArgs(args);
+    auto a = new Program("grd", "1.0")
+        .author("Hiroki Noda <kubo39@gmail.com>")
+        .add(new Option("o", "output", "output file name")
+             .name("output")
+             .repeating
+             .optional)
+        .add(new Argument("pattern", "match pattern").required)
+        .add(new Argument("path", "path to file").required)
+        .parse(args);
 
     try
     {
-        if (!outputFiles.length)
+        if (!a.optionAll("output").length)
         {
-            findMatches(File(cli.path, "r"), cli.pattern, stdout.lockingTextWriter());
+            findMatches(File(a.arg("path"), "r"), a.arg("pattern"), stdout.lockingTextWriter());
         }
         else
         {
-            foreach (outputFile; outputFiles)
+            foreach (outputFile; a.optionAll("output"))
             {
                 auto output = File(outputFile, "w");
-                findMatches(File(cli.path, "r"), cli.pattern, output.lockingTextWriter());
+                findMatches(File(a.arg("path"), "r"), a.arg("pattern"), output.lockingTextWriter());
             }
         }
     }
     catch (ErrnoException e)
     {
-        throw new CustomError("Error reading " ~ cli.path ~ ": " ~ e.msg);
+        throw new CustomError("Error reading " ~ a.arg("path") ~ ": " ~ e.msg);
     }
     return EXIT_SUCCESS;
 }

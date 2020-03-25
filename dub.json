@@ -2,6 +2,9 @@
 	"name": "grd",
 	"authors": ["Hiroki Noda"],
 	"dflags": ["-dip25", "-dip1000"],
+	"dependencies": {
+		"commandr": "~>0.1.1"
+	},
 	"targetType": "executable",
 	"targetPath": "bin",
 	"copyright": "Copyright © 2019, Hiroki Noda",

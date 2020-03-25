@@ -1,13 +1,15 @@
 version (unittest)  : import std.file;
 import std.process;
 
-void findContentInFile()
+// findContentInFile.
+unittest
 {
     const p = execute(["dub", "run", "-q", "--", "test", "tests/test.txt"]);
     assert(p.output == "A test\nAnother test\n");
 }
 
-void specifyOutputFile()
+// specifyOutputFile.
+unittest
 {
     const deleteme = "deleteme";
     cast(void) execute([
@@ -19,14 +21,16 @@ void specifyOutputFile()
     assert(readText(deleteme) == "A test\nAnother test\n");
 }
 
-void multipleOutputFiles()
+// multipleOutputFiles.
+unittest
 {
     const deleteme1 = "deleteme1";
     const deleteme2 = "deleteme2";
-    cast(void) execute([
-            "dub", "run", "-q", "--", "-o", deleteme1 ~ "," ~ deleteme2, "test",
-            "tests/test.txt"
-            ]);
+    cast(void) execute(["dub", "run", "-q", "--",
+                        "-o", deleteme1,
+                        "-o", deleteme2,
+                        "test",
+                        "tests/test.txt"]);
     assert(exists(deleteme1) && exists(deleteme2));
     scope (exit)
     {
@@ -37,9 +41,4 @@ void multipleOutputFiles()
     assert(readText(deleteme2) == "A test\nAnother test\n");
 }
 
-void main()
-{
-    findContentInFile();
-    specifyOutputFile();
-    multipleOutputFiles();
-}
+void main() {}
