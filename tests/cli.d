@@ -2,14 +2,14 @@ version (unittest)  : import std.file;
 import std.process;
 
 // findContentInFile.
-unittest
+@safe unittest
 {
     const p = execute(["dub", "run", "-q", "--", "test", "tests/test.txt"]);
     assert(p.output == "A test\nAnother test\n");
 }
 
 // specifyOutputFile.
-unittest
+@safe unittest
 {
     const deleteme = "deleteme";
     cast(void) execute([
@@ -22,7 +22,7 @@ unittest
 }
 
 // multipleOutputFiles.
-unittest
+@safe unittest
 {
     const deleteme1 = "deleteme1";
     const deleteme2 = "deleteme2";
