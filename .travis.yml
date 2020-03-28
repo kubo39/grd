@@ -10,6 +10,8 @@ addons:
       - make
 
 script:
+  - dub fetch commandr
+  - dub run commandr || true
   - make test
 
 branches:
